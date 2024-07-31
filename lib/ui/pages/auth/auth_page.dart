@@ -1,6 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, unnecessary_import
 
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -83,15 +82,9 @@ class _AuthPageState extends State<AuthPage>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-            onTap: () async {
-              // await addToCartPopUpAnimationController.forward();
-              await addToCartPopUpAnimationController.reverse();
-            },
-            child: const Text(
-              "SIGN IN",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
-            ),
+          const Text(
+            "CREATE NEW",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
           ),
           const TextField(
             decoration: InputDecoration(
@@ -103,18 +96,15 @@ class _AuthPageState extends State<AuthPage>
           ),
           const TextField(
             decoration: InputDecoration(
-              hintText: "username",
+              hintText: "password",
             ),
           ),
           const SizedBox(
-            height: 18,
+            height: 12,
           ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            child: const Text(
-              'Forgot Password?',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-              textAlign: TextAlign.end,
+          const TextField(
+            decoration: InputDecoration(
+              hintText: "repeat password",
             ),
           ),
           const SizedBox(
@@ -123,7 +113,7 @@ class _AuthPageState extends State<AuthPage>
           SizedBox(
             width: MediaQuery.sizeOf(context).width,
             child: const Text(
-              'START',
+              'DONE',
               style: TextStyle(
                   fontSize: 14,
                   color: Colors.blueAccent,
@@ -140,75 +130,74 @@ class _AuthPageState extends State<AuthPage>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 12,
-                    spreadRadius: 1,
-                    offset: Offset(0.5, 0.5))
-              ]),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () async {
-                  // await addToCartPopUpAnimationController.forward();
-                  await addToCartPopUpAnimationController.reverse();
-                },
-                child: const Text(
+        GestureDetector(
+          onTap: () async {
+            // await addToCartPopUpAnimationController.forward();
+            await addToCartPopUpAnimationController.reverse();
+          },
+          child: Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 12,
+                      spreadRadius: 1,
+                      offset: Offset(0.5, 0.5))
+                ]),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
                   "SIGN IN",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                 ),
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "username",
+                const TextField(
+                  decoration: InputDecoration(
+                    hintText: "username",
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "username",
+                const SizedBox(
+                  height: 12,
                 ),
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                  textAlign: TextAlign.end,
+                const TextField(
+                  decoration: InputDecoration(
+                    hintText: "username",
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 46,
-              ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                child: const Text(
-                  'START',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.blueAccent,
-                      fontWeight: FontWeight.w900),
-                  textAlign: TextAlign.center,
+                const SizedBox(
+                  height: 18,
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: const Text(
+                    'Forgot Password?',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                const SizedBox(
+                  height: 46,
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: const Text(
+                    'START',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.w900),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        InkWell(
-          splashColor: Colors.transparent,
+        GestureDetector(
           onTap: () async {
             await addToCartPopUpAnimationController.forward();
             // await addToCartPopUpAnimationController.reverse();
@@ -263,7 +252,7 @@ class _AuthPageState extends State<AuthPage>
             right: -46,
             bottom: -MediaQuery.sizeOf(context).height / 10,
             child: RotationTransition(
-              turns: const AlwaysStoppedAnimation(30 / 360),
+              turns: const AlwaysStoppedAnimation(20 / 360),
               child: Container(
                 width: MediaQuery.sizeOf(context).width / 2,
                 height: MediaQuery.sizeOf(context).height / 3,
