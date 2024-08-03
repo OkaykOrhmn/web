@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'package:dio/dio.dart';
 import 'package:web/data/api/api_endpoints.dart';
 import 'package:web/data/api/dio_helper.dart';

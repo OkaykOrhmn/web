@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:web/core/cubit/profile/profile_cubit.dart';
 import 'package:web/data/storage/token.dart';
 import 'package:web/ui/pages/auth/auth_page.dart';
@@ -39,7 +38,9 @@ class _SplashPageState extends State<SplashPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(milliseconds: 2400));
       final token = await getToken();
-      print("token: $token");
+      if (kDebugMode) {
+        print("token: $token");
+      }
       if (token.isEmpty) {
         Future.delayed(
           Duration.zero,

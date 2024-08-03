@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashBackground extends StatefulWidget {
@@ -11,29 +10,14 @@ class SplashBackground extends StatefulWidget {
   State<SplashBackground> createState() => _SplashBackgroundState();
 }
 
-class _SplashBackgroundState extends State<SplashBackground>
-    with SingleTickerProviderStateMixin {
-  late AnimationController addToCartPopUpAnimationController =
-      AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 900));
-
-  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: const Offset(-0.1, 0),
-    end: const Offset(-0.5, -0.2),
-  ).animate(CurvedAnimation(
-    parent: addToCartPopUpAnimationController,
-    curve: Curves.easeIn,
-  ));
-
+class _SplashBackgroundState extends State<SplashBackground> {
   @override
   void initState() {
-    addToCartPopUpAnimationController.forward();
     super.initState();
   }
 
   @override
   void dispose() {
-    addToCartPopUpAnimationController.dispose();
     super.dispose();
   }
 

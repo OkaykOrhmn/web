@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/cubit/profile/profile_cubit.dart';
-import 'package:web/ui/pages/auth/auth_page.dart';
 import 'package:web/ui/pages/splash_page.dart';
 
 void main() {
@@ -30,28 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-  // void _incrementCounter() async {
-  //   try {
-  //     final Dio _dio = Dio(BaseOptions(
-  //       baseUrl: "http://10.0.2.2:8000",
-  //       connectTimeout: const Duration(milliseconds: 30000),
-  //       contentType: ContentType.json.toString(),
-  //       responseType: ResponseType.json,
-  //     ));
-  //     _dio.interceptors.add(PrettyDioLogger());
-  //     _dio.get('/product/news');
-  //   } on DioException catch (e) {
-  //     print(e);
-  //   }
-
-  //   setState(() {
-  //     // This call to setState tells the Flutter framework that something has
-  //     // changed in this State, which causes it to rerun the build method below
-  //     // so that the display can reflect the updated values. If we changed
-  //     // _counter without calling setState(), then the build method would not be
-  //     // called again, and so nothing would appear to happen.
-  //     _counter++;
-  //   });
-  // }

@@ -1,6 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/data/api/dio_helper.dart';
 import 'package:web/data/model/login_model.dart';
 import 'package:web/data/repository/auth_repositry.dart';
