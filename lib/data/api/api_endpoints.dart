@@ -3,4 +3,6 @@ class ApiEndPoints {
   static String loginUser = '/auth/login';
   static String registerUser = '/auth/register';
   static String profileUser = '/auth/profile';
+  static String product = '/product';
+  static String categories = '/categories';
 }
