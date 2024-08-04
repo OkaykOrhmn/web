@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:web/ui/widgets/media/image/primary_network_image.dart';
 
 class CustomCarouselController extends CarouselControllerImpl {
   CarouselState? _state;
@@ -48,15 +48,9 @@ class PrimaryCarousel extends StatelessWidget {
             carouselController: _buttonCarouselController,
             itemBuilder: (context, index, realIndex) => Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: ClipRRect(
+                  child: PrimaryNetworkImage(
+                    image: images[index],
                     borderRadius: BorderRadius.circular(18),
-                    child: CachedNetworkImage(
-                        imageUrl: images[index],
-                        fit: BoxFit.cover,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator())),
                   ),
                 ),
             options: _carouselOptions),

@@ -11,11 +11,11 @@ part 'categories_state.dart';
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit() : super(CategoriesInitial());
 
-  void getCategories() async {
+  void getCategories({final int? take}) async {
     emit(CategoriesLoading());
     try {
       final response =
-          await ProductRepository(dioHelper: DioHelper()).categories();
+          await ProductRepository(dioHelper: DioHelper()).categories(take);
       emit(CategoriesSuccess(response: response));
     } on DioException catch (e) {
       emit(CategorieFail());

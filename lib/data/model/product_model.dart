@@ -1,3 +1,4 @@
+
 class ProductModel {
   int? status;
   Product? product;
@@ -23,7 +24,7 @@ class ProductModel {
 class Product {
   int? id;
   String? name;
-  String? price;
+  double? price;
   bool? isAvailable;
   String? mainImageUrl;
   List<String>? banners;
@@ -51,17 +52,16 @@ class Product {
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    price = json['price'];
+    price = double.parse(json['price'].toString());
     isAvailable = json['isAvailable'];
     mainImageUrl = json['mainImageUrl'];
     banners = json['banners'] != null ? json['banners'].cast<String?>() : [];
-    rate = json['rate'];
+    rate = double.parse(json['rate'].toString());
     categoryId = json['categoryId'];
     description = json['description'];
     createdAt = json['createdAt'];
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     if (json['highlights'] != null) {
       highlights = <Highlights>[];
       json['highlights'].forEach((v) {

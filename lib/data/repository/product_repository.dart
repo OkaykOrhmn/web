@@ -10,14 +10,18 @@ class ProductRepository extends Products {
   ProductRepository({required this.dioHelper});
 
   @override
-  Future<List<Product>> productsList(String? sort, bool? level) async {
+  Future<List<Product>> productsList(
+      String? sort, bool? level, int? take) async {
     try {
       Map<String, dynamic>? q = {};
       if (sort != null) {
-        q = {"sort": sort};
-        if (level != null) {
-          q = {"sort": sort, "level": level};
-        }
+        q.addAll({"sort": sort});
+      }
+      if (level != null) {
+        q.addAll({"level": level});
+      }
+      if (take != null) {
+        q.addAll({"take": take});
       }
       final response = await dioHelper.getRequest(
           url: ApiEndPoints.product, queryParameters: q);
@@ -40,9 +44,14 @@ class ProductRepository extends Products {
   }
 
   @override
-  Future<List<Category>> categories() async {
+  Future<List<Category>> categories(int? take) async {
     try {
-      final response = await dioHelper.getRequest(url: ApiEndPoints.categories);
+      Map<String, dynamic>? q = {};
+      if (take != null) {
+        q.addAll({"take": take});
+      }
+      final response = await dioHelper.getRequest(
+          url: ApiEndPoints.categories, queryParameters: q);
       List<dynamic> res = response.data['categories'];
 
       return res.map((e) => Category.fromJson(e)).toList();
@@ -53,7 +62,7 @@ class ProductRepository extends Products {
 }
 
 abstract class Products {
-  Future<List<Product>> productsList(String? sort, bool? level);
+  Future<List<Product>> productsList(String? sort, bool? level, int? take);
   Future<ProductModel> product(int id);
-  Future<List<Category>> categories();
+  Future<List<Category>> categories(int? take);
 }

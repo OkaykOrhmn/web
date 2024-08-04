@@ -9,9 +9,9 @@ import 'package:web/core/enum/dialogs_status.dart';
 import 'package:web/data/model/login_model.dart';
 import 'package:web/data/storage/token.dart';
 import 'package:web/ui/pages/home/home_page.dart';
-import 'package:web/ui/widgets/background/splash_background.dart';
-import 'package:web/ui/widgets/dialog/dialog_handler.dart';
-import 'package:web/ui/widgets/snackbar/snackbar_handler.dart';
+import 'package:web/ui/widgets/sectiones/background/splash_background.dart';
+import 'package:web/ui/widgets/handler/dialog/dialog_handler.dart';
+import 'package:web/ui/widgets/handler/snackbar/snackbar_handler.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

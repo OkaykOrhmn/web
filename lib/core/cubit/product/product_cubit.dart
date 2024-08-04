@@ -11,11 +11,12 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
 
-  Future<void> getProductsList({final String? sort, final bool? level}) async {
+  Future<void> getProductsList(
+      {final String? sort, final bool? level, final int? take}) async {
     emit(ProductLoading());
     try {
       final response = await ProductRepository(dioHelper: DioHelper())
-          .productsList(sort, level);
+          .productsList(sort, level, take);
       emit(ProductSuccess(response: response));
     } on DioException catch (e) {
       emit(ProductFail());

@@ -10,7 +10,10 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: AppBar(
         forceMaterialTransparency: true,
-        title: const Text('Title'),
+        title: const Text(
+          'Shop',
+          style: TextStyle(fontSize: 18, color: Colors.blueAccent),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -19,6 +22,7 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(
               CupertinoIcons.square_grid_2x2_fill,
               color: Colors.blueAccent,
+              size: 18,
             )),
         actions: [
           IconButton(
@@ -27,6 +31,7 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
               icon: const Icon(
                 CupertinoIcons.bell_fill,
                 color: Colors.blueAccent,
+                size: 18,
               )),
         ],
       ),

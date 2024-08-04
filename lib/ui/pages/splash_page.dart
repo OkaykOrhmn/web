@@ -8,7 +8,7 @@ import 'package:web/core/cubit/profile/profile_cubit.dart';
 import 'package:web/data/storage/token.dart';
 import 'package:web/ui/pages/auth/auth_page.dart';
 import 'package:web/ui/pages/home/home_page.dart';
-import 'package:web/ui/widgets/background/splash_background.dart';
+import 'package:web/ui/widgets/sectiones/background/splash_background.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
       if (token.isEmpty) {
         Future.delayed(
           Duration.zero,
-          () => Navigator.of(context).push(CupertinoPageRoute(
+          () => Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => const AuthPage(),
           )),
         );
@@ -71,13 +71,13 @@ class _SplashPageState extends State<SplashPage>
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is ProfileSuccess) {
-            Navigator.of(context).push(CupertinoPageRoute(
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const HomePage(),
             ));
           } else if (state is ProfileFail) {
             Future.delayed(
               Duration.zero,
-              () => Navigator.of(context).push(CupertinoPageRoute(
+              () => Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => const AuthPage(),
               )),
             );
