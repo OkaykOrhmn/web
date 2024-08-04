@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:web/ui/widgets/loading/primary_loading.dart';
 
 class DialogHandler {
   final BuildContext context;
@@ -8,15 +8,9 @@ class DialogHandler {
 
   Future<void> showLoadingDialog() async {
     await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: SpinKitSquareCircle(
-          color: Colors.blueAccent,
-          size: 32,
-        ),
-      ),
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const PrimaryLoading());
   }
 
   Future<void> showExitDialog() async {

@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         return false;
       },
       child: Scaffold(
-          backgroundColor: const Color(0xffeef1f1),
+          backgroundColor: Colors.white,
           body: SafeArea(
             child: AnimatedBuilder(
               animation: screenIndexed,

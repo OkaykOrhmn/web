@@ -34,13 +34,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 32),
             itemBuilder: (context, index) => Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 12,
-                    spreadRadius: 1,
-                    offset: const Offset(0.5, 0.5))
-              ], borderRadius: BorderRadius.circular(12), color: Colors.white),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 12,
+                        spreadRadius: 1,
+                        offset: const Offset(0.5, 0.5))
+                  ],
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xffeef1f1)),
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(2.0),

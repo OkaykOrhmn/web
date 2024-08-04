@@ -17,7 +17,7 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         leading: IconButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffeef1f1)),
             onPressed: () {},
             icon: const Icon(
               CupertinoIcons.square_grid_2x2_fill,
@@ -26,7 +26,8 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
             )),
         actions: [
           IconButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: const Color(0xffeef1f1)),
               onPressed: () {},
               icon: const Icon(
                 CupertinoIcons.bell_fill,

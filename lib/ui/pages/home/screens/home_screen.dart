@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/cubit/categories/categories_cubit.dart';
-import 'package:web/core/cubit/product/product_cubit.dart';
+import 'package:web/core/cubit/products/Products_state.dart';
+import 'package:web/core/cubit/products/products_cubit.dart';
 import 'package:web/data/model/product_model.dart';
 import 'package:web/main.dart';
 import 'package:web/ui/widgets/components/default_place_holder.dart';
@@ -64,16 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  BlocProvider<ProductCubit> newest() {
-    return BlocProvider<ProductCubit>(
+  BlocProvider<ProductsCubit> newest() {
+    return BlocProvider<ProductsCubit>(
       create: (context) {
-        ProductCubit productCubit = ProductCubit();
+        ProductsCubit productCubit = ProductsCubit();
         productCubit.getProductsList(sort: 'time', level: false, take: 6);
         return productCubit;
       },
-      child: BlocBuilder<ProductCubit, ProductState>(
+      child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
-          if (state is ProductSuccess) {
+          if (state is ProductsSuccess) {
             final response = state.response;
             if (response.isEmpty) {
               return const SizedBox();
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             );
-          } else if (state is ProductLoading) {
+          } else if (state is ProductsLoading) {
             return Column(
               children: [
                 titleDivider(title: "Newest"),
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                           margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: const Color(0xffeef1f1),
                               borderRadius: BorderRadius.circular(24)),
                         ))),
               ],
@@ -128,16 +129,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  BlocProvider<ProductCubit> specialForYou() {
-    return BlocProvider<ProductCubit>(
+  BlocProvider<ProductsCubit> specialForYou() {
+    return BlocProvider<ProductsCubit>(
       create: (context) {
-        ProductCubit productCubit = ProductCubit();
+        ProductsCubit productCubit = ProductsCubit();
         productCubit.getProductsList(sort: 'money', level: false, take: 10);
         return productCubit;
       },
-      child: BlocBuilder<ProductCubit, ProductState>(
+      child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
-          if (state is ProductSuccess) {
+          if (state is ProductsSuccess) {
             final response = state.response;
             if (response.isEmpty) {
               return const SizedBox();
@@ -163,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             );
-          } else if (state is ProductLoading) {
+          } else if (state is ProductsLoading) {
             return Column(
               children: [
                 titleDivider(title: "Special For You"),
@@ -185,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 240,
                       margin: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: const Color(0xffeef1f1),
                           borderRadius: BorderRadius.circular(24)),
                     )),
                   ),
@@ -203,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Container searchBar() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24), color: Colors.white),
+          borderRadius: BorderRadius.circular(24), color: const Color(0xffeef1f1)),
       padding: const EdgeInsets.symmetric(horizontal: 24),
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       child: Row(
@@ -287,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.all(2.0),
                               decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white))),
+                                  color: Color(0xffeef1f1)))),
                     ),
                   );
                 }),

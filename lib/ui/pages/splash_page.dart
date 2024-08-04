@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
       if (token.isEmpty) {
         Future.delayed(
           Duration.zero,
-          () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+          () => Navigator.of(context).pushReplacement(CupertinoPageRoute(
             builder: (context) => const AuthPage(),
           )),
         );
@@ -71,13 +71,13 @@ class _SplashPageState extends State<SplashPage>
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is ProfileSuccess) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(CupertinoPageRoute(
               builder: (context) => const HomePage(),
             ));
           } else if (state is ProfileFail) {
             Future.delayed(
               Duration.zero,
-              () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              () => Navigator.of(context).pushReplacement(CupertinoPageRoute(
                 builder: (context) => const AuthPage(),
               )),
             );

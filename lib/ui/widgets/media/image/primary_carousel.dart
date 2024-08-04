@@ -51,6 +51,7 @@ class PrimaryCarousel extends StatelessWidget {
                   child: PrimaryNetworkImage(
                     image: images[index],
                     borderRadius: BorderRadius.circular(18),
+                    boxFit: BoxFit.cover,
                   ),
                 ),
             options: _carouselOptions),

@@ -36,7 +36,7 @@ class ProductRepository extends Products {
   Future<ProductModel> product(int id) async {
     try {
       final response =
-          await dioHelper.postRequest(url: "${ApiEndPoints.product}/$id");
+          await dioHelper.getRequest(url: "${ApiEndPoints.product}/$id");
       return ProductModel.fromJson(response.data);
     } on DioException catch (e) {
       rethrow;

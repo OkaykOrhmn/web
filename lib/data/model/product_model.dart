@@ -1,4 +1,3 @@
-
 class ProductModel {
   int? status;
   Product? product;
@@ -27,7 +26,7 @@ class Product {
   double? price;
   bool? isAvailable;
   String? mainImageUrl;
-  List<String>? banners;
+  List<dynamic>? banners;
   double? rate;
   int? categoryId;
   String? description;
