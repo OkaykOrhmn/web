@@ -63,22 +63,39 @@ class ProductCardWidget extends StatelessWidget {
             ),
           ),
         ),
+        // Positioned(
+        //     top: 8,
+        //     right: 8,
+        //     child: Container(
+        //       decoration: const BoxDecoration(
+        //           color: Colors.blueAccent,
+        //           borderRadius: BorderRadius.only(
+        //               topRight: Radius.circular(24),
+        //               bottomLeft: Radius.circular(12))),
+        //       padding: const EdgeInsets.all(8),
+        //       child: Icon(
+        //         product.likes != null && product.likes!.isNotEmpty
+        //             ? CupertinoIcons.heart_fill
+        //             : CupertinoIcons.heart,
+        //         color: const Color(0xffeef1f1),
+        //         size: 18,
+        //       ),
+        //     ))
         Positioned(
             top: 8,
             right: 8,
             child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(24),
-                      bottomLeft: Radius.circular(12))),
-              padding: const EdgeInsets.all(8),
-              child: const Icon(
-                CupertinoIcons.heart,
-                color: Color(0xffeef1f1),
-                size: 18,
-              ),
-            ))
+                decoration: const BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(24),
+                        bottomLeft: Radius.circular(12))),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
+                child: Text(
+                  product.rate.toString(),
+                  style: const TextStyle(color: Colors.white),
+                )))
       ],
     );
   }

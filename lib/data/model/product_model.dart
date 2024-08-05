@@ -25,6 +25,7 @@ class Product {
   String? name;
   double? price;
   bool? isAvailable;
+  List<dynamic>? likes;
   String? mainImageUrl;
   List<dynamic>? banners;
   double? rate;
@@ -55,6 +56,7 @@ class Product {
     isAvailable = json['isAvailable'];
     mainImageUrl = json['mainImageUrl'];
     banners = json['banners'] != null ? json['banners'].cast<String?>() : [];
+    likes = json['likes'] != null ? json['likes'].cast<String?>() : [];
     rate = double.parse(json['rate'].toString());
     categoryId = json['categoryId'];
     description = json['description'];
@@ -77,6 +79,7 @@ class Product {
     data['isAvailable'] = isAvailable;
     data['mainImageUrl'] = mainImageUrl;
     data['banners'] = banners;
+    data['likes'] = likes;
     data['rate'] = rate;
     data['categoryId'] = categoryId;
     data['description'] = description;

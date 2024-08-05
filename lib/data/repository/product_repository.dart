@@ -68,6 +68,20 @@ class ProductRepository extends Products {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> like(int id, bool like) async {
+    try {
+      final response = await dioHelper.putRequest(
+          url: "${ApiEndPoints.product}/$id${ApiEndPoints.like}",
+          data: {"like": like});
+
+      bool res = response.data['like'];
+      return res;
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }
 
 abstract class Products {
@@ -75,4 +89,5 @@ abstract class Products {
       {required final FiltersModel filtersModel});
   Future<ProductModel> product(int id);
   Future<List<Category>> categories(int? take);
+  Future<bool> like(int id, bool like);
 }

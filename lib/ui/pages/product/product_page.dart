@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/bloc/product/product_bloc.dart';
+import 'package:web/core/cubit/cubit/like_cubit.dart';
+import 'package:web/data/model/product_model.dart';
 import 'package:web/ui/widgets/loading/primary_loading.dart';
 import 'package:web/ui/widgets/media/image/product_carousel.dart';
 
@@ -24,6 +26,8 @@ class _ProductPageState extends State<ProductPage> {
 
   ValueNotifier<int> count = ValueNotifier(1);
 
+  late Product product;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +39,7 @@ class _ProductPageState extends State<ProductPage> {
               child: BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   if (state is ProductSuccess) {
-                    final product = state.response.product!;
+                    product = state.response.product!;
                     final List<String> images = [
                       product.mainImageUrl.toString(),
                       ...product.banners!
@@ -233,7 +237,7 @@ class _ProductPageState extends State<ProductPage> {
               IconButton(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(
                     Icons.arrow_back_ios_new_rounded,
                     color: Colors.blueAccent,
@@ -250,15 +254,43 @@ class _ProductPageState extends State<ProductPage> {
                         color: Colors.blueAccent,
                         size: 18,
                       )),
-                  IconButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white),
-                      onPressed: () {},
-                      icon: const Icon(
-                        CupertinoIcons.heart,
-                        color: Colors.blueAccent,
-                        size: 18,
-                      )),
+                  BlocProvider<LikeCubit>(
+                    create: (context) => LikeCubit(),
+                    child: BlocBuilder<LikeCubit, LikeState>(
+                        builder: (context, state) {
+                      if (state is LikeSuccess) {
+                        product.likes ?? [];
+                        if (state.response) {
+                          if (product.likes!.isEmpty) {
+                            product.likes!.add(' ');
+                          }
+                        } else {
+                          product.likes!.clear();
+                        }
+                      }
+
+                      final like =
+                          product.likes != null && product.likes!.isNotEmpty;
+
+                      return IconButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white),
+                          onPressed: () {
+                            context
+                                .read<LikeCubit>()
+                                .likeProduct(product.id!, !like);
+                          },
+                          icon: state is LikeLoading
+                              ? const PrimaryLoading()
+                              : Icon(
+                                  like
+                                      ? CupertinoIcons.heart_fill
+                                      : CupertinoIcons.heart,
+                                  color: Colors.blueAccent,
+                                  size: 18,
+                                ));
+                    }),
+                  ),
                 ],
               )
             ],
