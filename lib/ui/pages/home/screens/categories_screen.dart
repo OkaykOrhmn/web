@@ -1,9 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/cubit/categories/categories_cubit.dart';
+import 'package:web/core/cubit/products/products_cubit.dart';
+import 'package:web/data/model/filters_model.dart';
+import 'package:web/ui/pages/product/products_list_page.dart';
+import 'package:web/ui/widgets/components/category_card_widget.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -32,38 +36,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             physics: const BouncingScrollPhysics(),
             itemCount: response.length,
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 32),
-            itemBuilder: (context, index) => Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 12,
-                        spreadRadius: 1,
-                        offset: const Offset(0.5, 0.5))
-                  ],
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xffeef1f1)),
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CachedNetworkImage(
-                        imageUrl: response[index].imageUrl.toString(),
+            itemBuilder: (context, index) => InkWell(
+                onTap: () => Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => ProductsCubit(),
+                          child: ProductsListPage(
+                              filters: FiltersModel(
+                                  categoryId: response[index].id,
+                                  sort: 'time',
+                                  level: false)),
+                        ),
                       ),
                     ),
-                    Text(
-                      response[index].name.toString(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
-              ),
-            ),
+                child: CategoryCardWidget(category: response[index])),
           );
         } else if (state is CategoriesLoading) {
           return const Center(

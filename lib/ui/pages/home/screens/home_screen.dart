@@ -7,8 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/cubit/categories/categories_cubit.dart';
 import 'package:web/core/cubit/products/Products_state.dart';
 import 'package:web/core/cubit/products/products_cubit.dart';
+import 'package:web/data/model/filters_model.dart';
 import 'package:web/data/model/product_model.dart';
 import 'package:web/main.dart';
+import 'package:web/ui/pages/product/products_list_page.dart';
 import 'package:web/ui/widgets/components/default_place_holder.dart';
 import 'package:web/ui/widgets/components/product_card_widget.dart';
 import 'package:web/ui/widgets/sectiones/appbar/primary_appbar.dart';
@@ -33,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://dkstatics-public.digikala.com/digikala-adservice-banners/24e93720f9f253d833b5131b9241ee6d8f979ca5_1722662924.jpg?x-oss-process=image/quality,q_95/format,webp",
     "https://dkstatics-public.digikala.com/digikala-adservice-banners/9e47e65e4ad4d052bf5b9a1bea6141c5de2fd8c4_1722675061.jpg?x-oss-process=image/quality,q_95/format,webp",
   ];
+
+  TextEditingController search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -69,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider<ProductsCubit>(
       create: (context) {
         ProductsCubit productCubit = ProductsCubit();
-        productCubit.getProductsList(sort: 'time', level: false, take: 6);
+        productCubit.getProductsList(
+            filtersModel: FiltersModel(sort: 'time', level: false, take: 6));
         return productCubit;
       },
       child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -81,7 +86,16 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return Column(
               children: [
-                titleDivider(title: "Newest"),
+                titleDivider(
+                  title: "Newest",
+                  click: () => Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => ProductsCubit(),
+                      child: ProductsListPage(
+                          filters: FiltersModel(sort: 'time', level: false)),
+                    ),
+                  )),
+                ),
                 const SizedBox(
                   height: 8,
                 ),
@@ -133,7 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider<ProductsCubit>(
       create: (context) {
         ProductsCubit productCubit = ProductsCubit();
-        productCubit.getProductsList(sort: 'money', level: false, take: 10);
+        productCubit.getProductsList(
+            filtersModel: FiltersModel(sort: 'money', level: false, take: 10));
         return productCubit;
       },
       child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -204,7 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Container searchBar() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24), color: const Color(0xffeef1f1)),
+          borderRadius: BorderRadius.circular(24),
+          color: const Color(0xffeef1f1)),
       padding: const EdgeInsets.symmetric(horizontal: 24),
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       child: Row(
@@ -218,6 +234,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: TextField(
+              onSubmitted: (value) =>
+                  Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => ProductsCubit(),
+                  child: ProductsListPage(
+                      filters: FiltersModel(
+                          search: value, sort: 'time', level: false)),
+                ),
+              )),
+              controller: search,
               decoration: InputDecoration(
                 hintText: 'Search...',
                 hintStyle: TextStyle(color: Colors.blueAccent.withOpacity(0.6)),
@@ -225,6 +251,36 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          AnimatedBuilder(
+            animation: search,
+            builder: (context, child) => search.text.isEmpty
+                ? const SizedBox()
+                : Row(
+                    children: [
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => ProductsCubit(),
+                              child: ProductsListPage(
+                                  filters: FiltersModel(
+                                      search: search.text,
+                                      sort: 'time',
+                                      level: false)),
+                            ),
+                          ),
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.arrow_right_circle_fill,
+                          color: Colors.blueAccent,
+                        ),
+                      )
+                    ],
+                  ),
+          )
         ],
       ),
     );
@@ -300,44 +356,58 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Column categoriesBtn(int index, List<Category> response) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(360),
-            onTap: index == 5 ? () => screenIndexed.value = 1 : null,
-            child: SizedBox(
-              width: 64,
-              height: 64,
-              child: Container(
-                padding: const EdgeInsets.all(2.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.blueAccent, width: 1)),
-                child: index == 5
-                    ? const Center(
-                        child: Icon(
-                        CupertinoIcons.layers_fill,
-                        color: Colors.blueAccent,
-                      ))
-                    : ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: response[index].imageUrl.toString(),
+  Widget categoriesBtn(int index, List<Category> response) {
+    return InkWell(
+      onTap: () => Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => ProductsCubit(),
+            child: ProductsListPage(
+                filters: FiltersModel(
+                    categoryId: response[index].id,
+                    sort: 'time',
+                    level: false)),
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(360),
+              onTap: index == 5 ? () => screenIndexed.value = 1 : null,
+              child: SizedBox(
+                width: 64,
+                height: 64,
+                child: Container(
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.blueAccent, width: 1)),
+                  child: index == 5
+                      ? const Center(
+                          child: Icon(
+                          CupertinoIcons.layers_fill,
+                          color: Colors.blueAccent,
+                        ))
+                      : ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: response[index].imageUrl.toString(),
+                          ),
                         ),
-                      ),
+                ),
               ),
             ),
           ),
-        ),
-        Text(
-          index == 5 ? 'More' : response[index].name.toString(),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        )
-      ],
+          Text(
+            index == 5 ? 'More' : response[index].name.toString(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ),
     );
   }
 }

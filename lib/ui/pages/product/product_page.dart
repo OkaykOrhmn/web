@@ -22,6 +22,8 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
+  ValueNotifier<int> count = ValueNotifier(1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +95,10 @@ class _ProductPageState extends State<ProductPage> {
                               const SizedBox(
                                 height: 18,
                               ),
-                              Text(product.description.toString())
+                              Text(
+                                product.description.toString(),
+                                textAlign: TextAlign.justify,
+                              )
                             ],
                           ),
                         ),
@@ -124,10 +129,70 @@ class _ProductPageState extends State<ProductPage> {
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(46),
                       ),
-                      child: ElevatedButton(
-                          onPressed: () {}, child: const Text('Add to Cart')),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.white, width: 1),
+                                  borderRadius: BorderRadius.circular(24)),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      if (count.value != 1) {
+                                        count.value -= 1;
+                                      }
+                                    },
+                                    child: const Icon(
+                                      CupertinoIcons.minus,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                  ),
+                                  AnimatedBuilder(
+                                    animation: count,
+                                    builder: (context, child) => Text(
+                                      "${count.value}",
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      count.value += 1;
+                                    },
+                                    child: const Icon(
+                                      CupertinoIcons.add,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Add to Cart')),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:web/core/cubit/categories/categories_cubit.dart';
+import 'package:web/ui/widgets/components/category_card_widget.dart';
 import 'package:web/ui/widgets/loading/primary_loading.dart';
 
 class DialogHandler {
@@ -41,7 +44,47 @@ class DialogHandler {
     );
   }
 
-  void pop() {
-    Navigator.of(context, rootNavigator: true).pop();
+  Future<void> showCategoriesBottomSheet(
+      {int? categoryId, required final Function(int) click}) async {
+    await showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        backgroundColor: Colors.white,
+        builder: (context) {
+          return BlocBuilder<CategoriesCubit, CategoriesState>(
+            builder: (context, state) {
+              if (state is CategoriesSuccess) {
+                final response = state.response;
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 46),
+                  height: 120,
+                  child: ListView.builder(
+                    itemCount: response.length,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemExtent: 120,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          click(response[index].id!);
+                        },
+                        child: CategoryCardWidget(
+                          category: response[index],
+                          color: response[index].id == categoryId
+                              ? Colors.blueAccent.withOpacity(0.5)
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return const PrimaryLoading();
+              }
+            },
+          );
+        });
   }
 }

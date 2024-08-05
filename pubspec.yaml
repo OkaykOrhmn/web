@@ -45,6 +45,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   cached_network_image: ^3.3.1
   shimmer: any
+  group_button: ^5.3.4
+  easy_debounce: ^2.0.3
 
 dev_dependencies:
   flutter_test:

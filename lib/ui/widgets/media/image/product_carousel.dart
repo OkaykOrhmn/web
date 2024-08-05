@@ -73,7 +73,7 @@ class ProductCarousel extends StatelessWidget {
                             dotWidth: 8,
                             dotHeight: 8,
                             activeDotColor: Colors.blueAccent,
-                            dotColor: Color(0xffeef1f1))),
+                            dotColor: Colors.white)),
                   );
                 } else {
                   return const SizedBox();

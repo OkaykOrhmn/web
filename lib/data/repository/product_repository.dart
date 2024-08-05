@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:web/data/api/api_endpoints.dart';
 import 'package:web/data/api/dio_helper.dart';
+import 'package:web/data/model/filters_model.dart';
 import 'package:web/data/model/product_model.dart';
 
 class ProductRepository extends Products {
@@ -11,17 +12,25 @@ class ProductRepository extends Products {
 
   @override
   Future<List<Product>> productsList(
-      String? sort, bool? level, int? take) async {
+      {required final FiltersModel filtersModel}) async {
     try {
       Map<String, dynamic>? q = {};
-      if (sort != null) {
-        q.addAll({"sort": sort});
+      if (filtersModel.sort != null) {
+        q.addAll({"sort": filtersModel.sort});
       }
-      if (level != null) {
-        q.addAll({"level": level});
+      if (filtersModel.level != null) {
+        q.addAll({"level": filtersModel.level});
       }
-      if (take != null) {
-        q.addAll({"take": take});
+      if (filtersModel.take != null) {
+        q.addAll({"take": filtersModel.take});
+      }
+
+      if (filtersModel.search != null) {
+        q.addAll({"search": filtersModel.search});
+      }
+
+      if (filtersModel.categoryId != null) {
+        q.addAll({"categoryId": filtersModel.categoryId});
       }
       final response = await dioHelper.getRequest(
           url: ApiEndPoints.product, queryParameters: q);
@@ -62,7 +71,8 @@ class ProductRepository extends Products {
 }
 
 abstract class Products {
-  Future<List<Product>> productsList(String? sort, bool? level, int? take);
+  Future<List<Product>> productsList(
+      {required final FiltersModel filtersModel});
   Future<ProductModel> product(int id);
   Future<List<Category>> categories(int? take);
 }
