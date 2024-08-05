@@ -29,11 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
     // "https://lumiere-a.akamaihd.net/v1/images/deadpool_wolverine_mobile_640x480_ad8020fd.png",
     // "https://blog.playstation.com/tachyon/2022/06/0c3c20a8d8514501524a0859461f391572ea6e61.jpg",
     // "https://i.redd.it/8h7wb66ofn0a1.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/8878cc02e2fc387319cda5b4fa1610cb0842fb4c_1722242016.jpg?x-oss-process=image/quality,q_95/format,webp",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/1e3ced747d8cf62c297f95c0d94ef9d13732048f_1718696318.jpg?x-oss-process=image/quality,q_95/format,webp",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/71f867b90d6dca65405a4252159f7b9c5b7cd8b6_1722415413.jpg?x-oss-process=image/quality,q_95/format,webp",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/24e93720f9f253d833b5131b9241ee6d8f979ca5_1722662924.jpg?x-oss-process=image/quality,q_95/format,webp",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/9e47e65e4ad4d052bf5b9a1bea6141c5de2fd8c4_1722675061.jpg?x-oss-process=image/quality,q_95/format,webp",
+    "https://www.apple.com/v/iphone/home/bv/images/meta/iphone__ky2k6x5u6vue_og.png",
+    "https://image.coolblue.nl/624x351/content/3825293fe8cdd871ced381088c762d44",
+    "https://cdn.mos.cms.futurecdn.net/fsDKHB3ZyNJK6zMpDDBenB-1200-80.jpg",
+    "https://media.product.which.co.uk/prod/images/ar_2to1_1500x750/22a475e555d7-best-laptop-deals.jpg",
+
+    // "https://dkstatics-public.digikala.com/digikala-adservice-banners/8878cc02e2fc387319cda5b4fa1610cb0842fb4c_1722242016.jpg?x-oss-process=image/quality,q_95/format,webp",
+    // "https://dkstatics-public.digikala.com/digikala-adservice-banners/1e3ced747d8cf62c297f95c0d94ef9d13732048f_1718696318.jpg?x-oss-process=image/quality,q_95/format,webp",
+    // "https://dkstatics-public.digikala.com/digikala-adservice-banners/71f867b90d6dca65405a4252159f7b9c5b7cd8b6_1722415413.jpg?x-oss-process=image/quality,q_95/format,webp",
+    // "https://dkstatics-public.digikala.com/digikala-adservice-banners/24e93720f9f253d833b5131b9241ee6d8f979ca5_1722662924.jpg?x-oss-process=image/quality,q_95/format,webp",
+    // "https://dkstatics-public.digikala.com/digikala-adservice-banners/9e47e65e4ad4d052bf5b9a1bea6141c5de2fd8c4_1722675061.jpg?x-oss-process=image/quality,q_95/format,webp",
   ];
 
   TextEditingController search = TextEditingController();
@@ -74,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) {
         ProductsCubit productCubit = ProductsCubit();
         productCubit.getProductsList(
-            filtersModel: FiltersModel(sort: 'time', level: false, take: 6));
+            filtersModel: FiltersModel(sort: 'time', level: false, take: 8));
         return productCubit;
       },
       child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -148,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) {
         ProductsCubit productCubit = ProductsCubit();
         productCubit.getProductsList(
-            filtersModel: FiltersModel(sort: 'money', level: false, take: 10));
+            filtersModel: FiltersModel(sort: 'rate', level: false, take: 6));
         return productCubit;
       },
       child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -160,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return Column(
               children: [
-                titleDivider(title: "Special For You"),
+                titleDivider(title: "Popular"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -182,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is ProductsLoading) {
             return Column(
               children: [
-                titleDivider(title: "Special For You"),
+                titleDivider(title: "Popular"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -293,12 +298,14 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title),
-          InkWell(
-              onTap: click,
-              child: const Text(
-                "See all",
-                style: TextStyle(color: Colors.blueAccent),
-              ))
+          click == null
+              ? const SizedBox()
+              : InkWell(
+                  onTap: click,
+                  child: const Text(
+                    "See all",
+                    style: TextStyle(color: Colors.blueAccent),
+                  ))
         ],
       ),
     );

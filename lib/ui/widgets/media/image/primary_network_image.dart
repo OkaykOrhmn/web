@@ -24,7 +24,9 @@ class PrimaryNetworkImage extends StatelessWidget {
       child: CachedNetworkImage(
           imageUrl: image,
           fit: boxFit,
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+          errorWidget: (context, url, error) {
+            return const Icon(Icons.error);
+          },
           placeholder: (context, url) => placeHolder
               ? DefaultPlaceHolder(
                   child: Container(

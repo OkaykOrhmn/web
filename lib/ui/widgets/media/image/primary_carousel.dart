@@ -44,7 +44,7 @@ class PrimaryCarousel extends StatelessWidget {
     return Stack(
       children: [
         CarouselSlider.builder(
-            itemCount: 4,
+            itemCount: images.length,
             carouselController: _buttonCarouselController,
             itemBuilder: (context, index, realIndex) => Padding(
                   padding: const EdgeInsets.all(18.0),
