@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:web/ui/widgets/handler/dialog/dialog_handler.dart';
 import 'package:web/ui/widgets/media/image/primary_network_image.dart';
 
 class CustomCarouselController extends CarouselControllerImpl {
@@ -48,11 +49,15 @@ class ProductCarousel extends StatelessWidget {
           CarouselSlider.builder(
               itemCount: images.length,
               carouselController: _buttonCarouselController,
-              itemBuilder: (context, index, realIndex) => Padding(
-                    padding: const EdgeInsets.all(64.0),
-                    child: PrimaryNetworkImage(
-                      image: images[index],
-                      placeHolder: false,
+              itemBuilder: (context, index, realIndex) => InkWell(
+                    onTap: () =>
+                        DialogHandler(context).showImageDialog(images[index]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(64.0),
+                      child: PrimaryNetworkImage(
+                        image: images[index],
+                        placeHolder: false,
+                      ),
                     ),
                   ),
               options: _carouselOptions),

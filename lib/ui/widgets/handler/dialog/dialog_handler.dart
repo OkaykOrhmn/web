@@ -1,8 +1,12 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web/core/cubit/categories/categories_cubit.dart';
 import 'package:web/ui/widgets/components/category_card_widget.dart';
 import 'package:web/ui/widgets/loading/primary_loading.dart';
+import 'package:web/ui/widgets/media/image/primary_network_image.dart';
 
 class DialogHandler {
   final BuildContext context;
@@ -86,5 +90,73 @@ class DialogHandler {
             },
           );
         });
+  }
+
+  Future<void> showImageDialog(String src) async {
+    final transformationController = TransformationController();
+    TapDownDetails doubleTapDetails = TapDownDetails();
+    await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    onDoubleTapDown: (d) => doubleTapDetails = d,
+                    onDoubleTap: () {
+                      if (transformationController.value !=
+                          Matrix4.identity()) {
+                        transformationController.value = Matrix4.identity();
+                      } else {
+                        final position = doubleTapDetails.localPosition;
+                        // For a 3x zoom
+                        transformationController.value = Matrix4.identity()
+                          // ..translate(-position.dx * 2, -position.dy * 2)
+                          // ..scale(3.0);
+
+                          // Fox a 2x zoom
+                          ..translate(-position.dx * 1.5, -position.dy * 1.5)
+                          ..scale(2.5);
+                      }
+                    },
+                    child: InteractiveViewer(
+                      panEnabled: true, // Set it to false to prevent panning.
+                      minScale: 0.5,
+                      maxScale: 4,
+                      transformationController: transformationController,
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            PrimaryNetworkImage(
+                              image: src,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      top: 24,
+                      right: 24,
+                      child: InkWell(
+                          onTap: () => Navigator.of(context).pop(true),
+                          child: const Icon(
+                            CupertinoIcons.xmark_circle_fill,
+                            color: Colors.blueAccent,
+                            size: 24,
+                          )))
+                ],
+              )),
+        ),
+      ),
+    );
   }
 }

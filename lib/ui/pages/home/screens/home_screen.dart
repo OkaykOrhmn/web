@@ -13,6 +13,7 @@ import 'package:web/main.dart';
 import 'package:web/ui/pages/product/products_list_page.dart';
 import 'package:web/ui/widgets/components/default_place_holder.dart';
 import 'package:web/ui/widgets/components/product_card_widget.dart';
+import 'package:web/ui/widgets/components/title_divider.dart';
 import 'package:web/ui/widgets/sectiones/appbar/primary_appbar.dart';
 import 'package:web/ui/widgets/media/image/primary_carousel.dart';
 
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return Column(
               children: [
-                titleDivider(
+                TitleDivider(
                   title: "Newest",
                   click: () => Navigator.of(context).push(CupertinoPageRoute(
                     builder: (context) => BlocProvider(
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is ProductsLoading) {
             return Column(
               children: [
-                titleDivider(title: "Newest"),
+                const TitleDivider(title: "Newest"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -165,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return Column(
               children: [
-                titleDivider(title: "Popular"),
+                const TitleDivider(title: "Popular"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -187,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is ProductsLoading) {
             return Column(
               children: [
-                titleDivider(title: "Popular"),
+                const TitleDivider(title: "Popular"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -286,26 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
           )
-        ],
-      ),
-    );
-  }
-
-  Padding titleDivider({required final String title, final Function()? click}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title),
-          click == null
-              ? const SizedBox()
-              : InkWell(
-                  onTap: click,
-                  child: const Text(
-                    "See all",
-                    style: TextStyle(color: Colors.blueAccent),
-                  ))
         ],
       ),
     );

@@ -5,5 +5,7 @@ class ApiEndPoints {
   static String profileUser = '/auth/profile';
   static String product = '/product';
   static String like = '/like';
+  static String liked = '/auth/liked';
   static String categories = '/categories';
+  static String carts = '/carts';
 }

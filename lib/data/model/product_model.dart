@@ -34,6 +34,7 @@ class Product {
   String? createdAt;
   Category? category;
   List<Highlights>? highlights;
+  int? count;
 
   Product(
       {this.id,
@@ -47,20 +48,25 @@ class Product {
       this.description,
       this.createdAt,
       this.category,
-      this.highlights});
+      this.highlights,
+      this.count});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    price = double.parse(json['price'].toString());
+    price = json['price'] != null
+        ? double.tryParse(json['price'].toString())
+        : null;
     isAvailable = json['isAvailable'];
     mainImageUrl = json['mainImageUrl'];
     banners = json['banners'] != null ? json['banners'].cast<String?>() : [];
     likes = json['likes'] != null ? json['likes'].cast<String?>() : [];
-    rate = double.parse(json['rate'].toString());
+    rate =
+        json['rate'] != null ? double.tryParse(json['rate'].toString()) : null;
     categoryId = json['categoryId'];
     description = json['description'];
     createdAt = json['createdAt'];
+    count = json['count'];
     category =
         json['category'] != null ? Category.fromJson(json['category']) : null;
     if (json['highlights'] != null) {
@@ -84,6 +90,7 @@ class Product {
     data['categoryId'] = categoryId;
     data['description'] = description;
     data['createdAt'] = createdAt;
+    data['count'] = count;
     if (category != null) {
       data['category'] = category!.toJson();
     }

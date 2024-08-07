@@ -82,6 +82,18 @@ class ProductRepository extends Products {
       rethrow;
     }
   }
+
+  @override
+  Future<List<Product>> getLikes() async {
+    try {
+      final response = await dioHelper.getRequest(url: ApiEndPoints.liked);
+      List<dynamic> res = response.data['liked'];
+
+      return res.map((e) => Product.fromJson(e)).toList();
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }
 
 abstract class Products {
@@ -90,4 +102,5 @@ abstract class Products {
   Future<ProductModel> product(int id);
   Future<List<Category>> categories(int? take);
   Future<bool> like(int id, bool like);
+  Future<List<Product>> getLikes();
 }

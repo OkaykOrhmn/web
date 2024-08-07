@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web/data/model/setting_button_model.dart';
 import 'package:web/data/storage/token.dart';
+import 'package:web/main.dart';
+import 'package:web/ui/pages/like/like_page.dart';
 import 'package:web/ui/pages/splash_page.dart';
 import 'package:web/ui/widgets/media/image/primary_network_image.dart';
 
@@ -18,10 +20,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     List<SettingButtonModel> btns = [
-      SettingButtonModel(title: 'My Cart', icon: CupertinoIcons.cart_fill),
-      SettingButtonModel(title: 'Wish List', icon: CupertinoIcons.heart_fill),
       SettingButtonModel(
-          title: 'My Order', icon: CupertinoIcons.square_favorites_alt_fill),
+          title: 'My Cart',
+          icon: CupertinoIcons.cart_fill,
+          click: () => screenIndexed.value = 2),
+      SettingButtonModel(
+        title: 'Wish List',
+        icon: CupertinoIcons.heart_fill,
+        click: () => Navigator.of(context).push(CupertinoPageRoute(
+          builder: (context) => const LikePage(),
+        )),
+      ),
+      SettingButtonModel(
+        title: 'My Order',
+        icon: CupertinoIcons.square_favorites_alt_fill,
+      ),
       SettingButtonModel(title: 'Help', icon: CupertinoIcons.info_circle_fill),
       SettingButtonModel(title: 'Setting', icon: CupertinoIcons.settings),
       SettingButtonModel(

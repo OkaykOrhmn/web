@@ -90,11 +90,28 @@ class ProductCardWidget extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(24),
                         bottomLeft: Radius.circular(12))),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
-                child: Text(
-                  product.rate.toString(),
-                  style: const TextStyle(color: Colors.white),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2)
+                    .copyWith(left: 12),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      product.rate.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 2.0),
+                      child: Icon(
+                        CupertinoIcons.star_fill,
+                        color: Colors.white,
+                        size: 12,
+                      ),
+                    ),
+                  ],
                 )))
       ],
     );

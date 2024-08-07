@@ -14,20 +14,20 @@ class PrimaryAppbar extends StatelessWidget implements PreferredSizeWidget {
           'Shop',
           style: TextStyle(fontSize: 18, color: Colors.blueAccent),
         ),
-        centerTitle: true,
+        centerTitle: false,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffeef1f1)),
-            onPressed: () {},
-            icon: const Icon(
-              CupertinoIcons.square_grid_2x2_fill,
-              color: Colors.blueAccent,
-              size: 18,
-            )),
+        // leading: IconButton(
+        //     style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffeef1f1)),
+        //     onPressed: () {},
+        //     icon: const Icon(
+        //       CupertinoIcons.square_grid_2x2_fill,
+        //       color: Colors.blueAccent,
+        //       size: 18,
+        //     )),
         actions: [
           IconButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: const Color(0xffeef1f1)),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffeef1f1)),
               onPressed: () {},
               icon: const Icon(
                 CupertinoIcons.bell_fill,
