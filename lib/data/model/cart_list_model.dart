@@ -11,16 +11,16 @@ class CartListModel {
     if (json['carts'] != null) {
       carts = <Carts>[];
       json['carts'].forEach((v) {
-        carts!.add(new Carts.fromJson(v));
+        carts!.add(Carts.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.carts != null) {
-      data['carts'] = this.carts!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    if (carts != null) {
+      data['carts'] = carts!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -43,19 +43,19 @@ class Carts {
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {
-        products!.add(new Products.fromJson(v));
+        products!.add(Products.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['userId'] = this.userId;
-    data['status'] = this.status;
-    if (this.products != null) {
-      data['products'] = this.products!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['userId'] = userId;
+    data['status'] = status;
+    if (products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -74,16 +74,16 @@ class Products {
     cartId = json['cartId'];
     count = json['count'];
     product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productId'] = this.productId;
-    data['cartId'] = this.cartId;
-    data['count'] = this.count;
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['cartId'] = cartId;
+    data['count'] = count;
+    if (product != null) {
+      data['product'] = product!.toJson();
     }
     return data;
   }
@@ -103,10 +103,10 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['imageUrl'] = this.imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['imageUrl'] = imageUrl;
     return data;
   }
 }
@@ -123,9 +123,9 @@ class Likes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['productId'] = this.productId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['productId'] = productId;
     return data;
   }
 }

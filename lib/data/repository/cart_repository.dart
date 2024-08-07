@@ -1,13 +1,9 @@
-// ignore_for_file: unused_catch_clause
-
-import 'dart:ffi';
+// ignore_for_file: unused_catch_clause, unused_local_variable
 
 import 'package:dio/dio.dart';
 import 'package:web/data/api/api_endpoints.dart';
 import 'package:web/data/api/dio_helper.dart';
 import 'package:web/data/model/cart_list_model.dart';
-import 'package:web/data/model/filters_model.dart';
-import 'package:web/data/model/product_model.dart';
 
 class CartRepository extends Cart {
   final DioHelper dioHelper;
