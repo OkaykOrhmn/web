@@ -7,8 +7,10 @@ import 'package:web/ui/pages/product/product_page.dart';
 import 'package:web/ui/widgets/media/image/primary_network_image.dart';
 
 class ProductCardWidget extends StatelessWidget {
-  const ProductCardWidget({super.key, required this.product});
+  const ProductCardWidget(
+      {super.key, required this.product, this.backgroundColor});
   final Product product;
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -24,7 +26,7 @@ class ProductCardWidget extends StatelessWidget {
             margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-                color: const Color(0xffeef1f1),
+                color: backgroundColor ?? const Color(0xffeef1f1),
                 borderRadius: BorderRadius.circular(24)),
             child: Flex(
               direction: Axis.vertical,

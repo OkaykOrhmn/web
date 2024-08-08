@@ -17,6 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         try {
           final response =
               await CartRepository(dioHelper: DioHelper()).cartList();
+
           emit(CartSuccess(response: response));
         } on DioException catch (e) {
           emit(CartFail());

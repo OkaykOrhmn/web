@@ -8,7 +8,9 @@ import 'package:web/core/bloc/likes/likes_bloc.dart';
 import 'package:web/core/bloc/product/product_bloc.dart';
 import 'package:web/core/cubit/cart/edit_cart_cubit.dart';
 import 'package:web/core/cubit/like/like_cubit.dart';
+import 'package:web/data/model/cart_list_model.dart';
 import 'package:web/data/model/product_model.dart';
+import 'package:web/ui/widgets/handler/dialog/dialog_handler.dart';
 import 'package:web/ui/widgets/loading/primary_loading.dart';
 import 'package:web/ui/widgets/media/image/product_carousel.dart';
 
@@ -27,9 +29,19 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
-  ValueNotifier<int> count = ValueNotifier(1);
+  ValueNotifier<int?> count = ValueNotifier(null);
+  int? cartId;
 
   late Product product;
+
+  void addCart(Carts cart) {
+    cartId = cart.id!;
+    for (var element in cart.products!) {
+      if (element.productId == product.id) {
+        count.value = element.count!;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,76 +158,153 @@ class _ProductPageState extends State<ProductPage> {
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(46),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.white, width: 1),
-                                    borderRadius: BorderRadius.circular(24)),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                child: Row(
+                        child: AnimatedBuilder(
+                            animation: count,
+                            builder: (context, child) {
+                              if (count.value == null) {
+                                return BlocBuilder<CartBloc, CartState>(
+                                  builder: (context, state) {
+                                    if (state is CartSuccess) {
+                                      final carts = state.response.carts!;
+                                      if (carts.isEmpty) {
+                                        return Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            child: ElevatedButton(
+                                                onPressed: () async {
+                                                  await context
+                                                      .read<EditCartCubit>()
+                                                      .addCart(
+                                                          userId: 62,
+                                                          name: 'name');
+                                                  Future.delayed(
+                                                    Duration.zero,
+                                                    () => context
+                                                        .read<CartBloc>()
+                                                        .add(GetAllCarts()),
+                                                  );
+                                                },
+                                                child:
+                                                    const Text('create Cart')),
+                                          ),
+                                        );
+                                      }
+
+                                      return Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12),
+                                          child: ElevatedButton(
+                                              onPressed: () =>
+                                                  DialogHandler(context)
+                                                      .showCartsBottomSheet(
+                                                          click: addCart),
+                                              child: const Text('Select Cart')),
+                                        ),
+                                      );
+                                    } else {
+                                      return const SizedBox();
+                                    }
+                                  },
+                                );
+                              } else {
+                                return Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        if (count.value != 1) {
-                                          count.value -= 1;
-                                        }
-                                      },
-                                      child: const Icon(
-                                        CupertinoIcons.minus,
-                                        color: Colors.white,
-                                        size: 14,
+                                    Expanded(
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 12),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.white, width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(24)),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                if (count.value != null &&
+                                                    count.value != 0) {
+                                                  count.value =
+                                                      count.value! - 1;
+                                                }
+                                              },
+                                              child: const Icon(
+                                                CupertinoIcons.minus,
+                                                color: Colors.white,
+                                                size: 14,
+                                              ),
+                                            ),
+                                            Text(
+                                              "${count.value}",
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                count.value = count.value! + 1;
+                                              },
+                                              child: const Icon(
+                                                CupertinoIcons.add,
+                                                color: Colors.white,
+                                                size: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    AnimatedBuilder(
-                                      animation: count,
-                                      builder: (context, child) => Text(
-                                        "${count.value}",
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        count.value += 1;
-                                      },
-                                      child: const Icon(
-                                        CupertinoIcons.add,
-                                        color: Colors.white,
-                                        size: 14,
+                                    IconButton(
+                                        onPressed: () {
+                                          DialogHandler(context)
+                                              .showCartsBottomSheet(
+                                                  click: addCart);
+                                        },
+                                        icon: const Icon(
+                                          CupertinoIcons.cart,
+                                          color: Colors.white,
+                                        )),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12),
+                                        child: ElevatedButton(
+                                            onPressed: () async {
+                                              if (count.value == 0) {
+                                                await context
+                                                    .read<EditCartCubit>()
+                                                    .deleteProductInCart(
+                                                        cartId: cartId!,
+                                                        productId: product.id!);
+                                              } else {
+                                                await context
+                                                    .read<EditCartCubit>()
+                                                    .putCart(
+                                                        cartId: cartId!,
+                                                        productId: product.id!,
+                                                        count: count.value!);
+                                              }
+                                              Future.delayed(
+                                                Duration.zero,
+                                                () => context
+                                                    .read<CartBloc>()
+                                                    .add(GetAllCarts()),
+                                              );
+                                            },
+                                            child: const Text('Add to Cart')),
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      // context
-                                      //     .read<EditCartCubit>()
-                                      //     .addCart(userId: 62, name: 'name');
-                                      context.read<EditCartCubit>().putCart(
-                                          cartId: 2,
-                                          productId: product.id!,
-                                          count: count.value);
-                                    },
-                                    child: const Text('Add to Cart')),
-                              ),
-                            ),
-                          ],
-                        ),
+                                );
+                              }
+                            }),
                       ),
                     ),
                   ],

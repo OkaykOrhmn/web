@@ -12,6 +12,19 @@ class CartRepository extends Cart {
   @override
   Future<CartListModel> cartList() async {
     try {
+      final q = {"p": true};
+      final response = await dioHelper.getRequest(
+          url: ApiEndPoints.carts, queryParameters: q);
+
+      return CartListModel.fromJson(response.data);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CartListModel> carts() async {
+    try {
       final response = await dioHelper.getRequest(url: ApiEndPoints.carts);
 
       return CartListModel.fromJson(response.data);
@@ -39,7 +52,6 @@ class CartRepository extends Cart {
     try {
       final response = await dioHelper.postRequest(
           url: ApiEndPoints.carts, data: {"userId": userId, "name": name});
-      List<dynamic> res = response.data['carts'];
       return response;
     } on DioException catch (e) {
       rethrow;
@@ -62,11 +74,39 @@ class CartRepository extends Cart {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> deleteInCart(
+      {required int cartId, required int productId}) async {
+    try {
+      final response = await dioHelper.deleteRequest(
+          url:
+              "${ApiEndPoints.carts}/$cartId${ApiEndPoints.product}/$productId");
+      return response.data['carts'];
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> delete({required int id}) async {
+    try {
+      final response =
+          await dioHelper.deleteRequest(url: "${ApiEndPoints.carts}/$id");
+      return response;
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }
 
 abstract class Cart {
   Future<CartListModel> cartList();
   Future<Carts> cart({required final int id});
+  Future<Response> delete({required final int id});
+  Future<CartListModel> carts();
+  Future<bool> deleteInCart(
+      {required final int cartId, required final int productId});
   Future<Response> addCart({
     required int userId,
     required String name,
